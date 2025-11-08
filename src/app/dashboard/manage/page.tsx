@@ -11,6 +11,7 @@ import { ExpenseTable, Expense } from "@/components/expenses/expense-table"
 import { EditExpenseDialog } from "@/components/expenses/edit-expense-dialog"
 import { ExpenseChart } from "@/components/expense-chart"
 import { useToast } from "@/components/ui/toaster"
+import { BudgetTracker } from "@/components/expenses/budgetTracker"
 
 export default function ManageExpensePage() {
   const { status } = useSession()
@@ -157,6 +158,10 @@ export default function ManageExpensePage() {
         onCategoryChange={handleCategoryFilterChange}
         onMonthChange={handleMonthFilterChange}
       />
+      <BudgetTracker month={monthFilter || (() => {
+        const now = new Date()
+        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`
+      })()} />
 
       <ExpenseChart expenses={expenses} />
 
