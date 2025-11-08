@@ -10,6 +10,12 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/toaster"
 
+const users = [
+  { email: "nafiz@gmail.com", password: "nakib1" },
+  
+]
+
+
 export default function LoginPage() {
   const [loginEmail, setLoginEmail] = useState("")
   const [loginPassword, setLoginPassword] = useState("")
@@ -42,8 +48,8 @@ export default function LoginPage() {
         console.error("Login error:", result.error)
         toast({
           title: "Login Failed",
-          description: result.error === "CredentialsSignin" 
-            ? "Invalid email or password" 
+          description: result.error === "CredentialsSignin"
+            ? "Invalid email or password"
             : result.error || "An error occurred during login",
           variant: "destructive",
         })
@@ -176,7 +182,36 @@ export default function LoginPage() {
                   {isLoading ? "Signing in..." : "Sign In"}
                 </Button>
               </form>
+
+              {/* Users table */}
+              <div className="mt-6">
+                <h3 className="mb-2 font-semibold">Saved Users</h3>
+                <table className="w-full border-collapse border border-gray-300 text-left text-sm">
+                  <thead>
+                    <tr>
+                      <th className="border border-gray-300 px-2 py-1">Email</th>
+                      <th className="border border-gray-300 px-2 py-1">Password</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map(({ email, password }) => (
+                      <tr
+                        key={email}
+                        className="cursor-pointer hover:bg-gray-100"
+                        onClick={() => {
+                          setLoginEmail(email)
+                          setLoginPassword(password)
+                        }}
+                      >
+                        <td className="border border-gray-300 px-2 py-1">{email}</td>
+                        <td className="border border-gray-300 px-2 py-1">{password}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </TabsContent>
+
             <TabsContent value="register">
               <form onSubmit={handleRegister} className="space-y-4">
                 <div className="space-y-2">
